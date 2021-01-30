@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   namespace :user do
     resources :posts
   end
-  resources :likes
-  resources :comments
+  resources :likes, only: [:create, :destroy]
+  resources :comments, only: [:create, :destroy]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
