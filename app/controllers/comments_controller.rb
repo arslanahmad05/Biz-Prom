@@ -1,12 +1,14 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_post, only: %i[show edit update destroy]
 
   def create
     @comment = Comment.new(comment_params)
     @comment.user = current_user
     if @comment.save
       flash[:notice] = "comment add successfully"
+      respond_to do |format|
+        format.js { render partial: 'comments/create' }
+      end
     else
       flash[:alert] = @comment.errors
       redirect_to root_path

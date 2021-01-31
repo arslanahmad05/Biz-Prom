@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_30_120206) do
+ActiveRecord::Schema.define(version: 2021_01_31_042347) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,12 @@ ActiveRecord::Schema.define(version: 2021_01_30_120206) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "chat_rooms", force: :cascade do |t|
+    t.string "unique_name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "comments", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "post_id", null: false
@@ -44,6 +50,20 @@ ActiveRecord::Schema.define(version: 2021_01_30_120206) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "follows", force: :cascade do |t|
+    t.string "followable_type", null: false
+    t.bigint "followable_id", null: false
+    t.string "follower_type", null: false
+    t.bigint "follower_id", null: false
+    t.boolean "blocked", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["followable_id", "followable_type"], name: "fk_followables"
+    t.index ["followable_type", "followable_id"], name: "index_follows_on_followable_type_and_followable_id"
+    t.index ["follower_id", "follower_type"], name: "fk_follows"
+    t.index ["follower_type", "follower_id"], name: "index_follows_on_follower_type_and_follower_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -55,12 +75,40 @@ ActiveRecord::Schema.define(version: 2021_01_30_120206) do
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.bigint "chat_room_id", null: false
+    t.integer "sender", null: false
+    t.integer "receiver", null: false
+    t.boolean "read", default: false
+    t.boolean "boolean", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["chat_room_id"], name: "index_messages_on_chat_room_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.text "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "profiles", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "user_name", null: false
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "address", null: false
+    t.string "city", null: false
+    t.string "country", null: false
+    t.string "phone", null: false
+    t.string "company_name", null: false
+    t.text "company_bio", null: false
+    t.string "gender", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -84,5 +132,7 @@ ActiveRecord::Schema.define(version: 2021_01_30_120206) do
   add_foreign_key "comments", "users"
   add_foreign_key "likes", "posts"
   add_foreign_key "likes", "users"
+  add_foreign_key "messages", "chat_rooms"
   add_foreign_key "posts", "users"
+  add_foreign_key "profiles", "users"
 end

@@ -1,0 +1,27 @@
+<div class="card boxes_main mb-3 p-4">
+  <%= form_for(@post, url: user_posts_path) do |f| %>
+    <%= f.text_field :content, class:"form-control add_post height_50px mb-4", placeholder: "Start a post" %>
+    <div class="row d-flex justify-content-between">
+      <div class="col-lg-8">
+        <button class="file btn new_post_btn p-1 mr-3">
+          <i class="fa fa-picture-o sky_blue_18px" aria-hidden="true"></i>
+          <span class="artdeco-button__text">
+            Photo
+          </span>
+          <%= f.file_field :images, multiple: true %>
+        </button>
+        <button class="file btn new_post_btn p-1">
+          <i class="fa fa-youtube-play sky_blue_18px" aria-hidden="true"></i>
+          <span class="artdeco-button__text">
+            Video
+          </span>
+
+          <%= f.file_field :videos, multiple: true %>
+        </button>
+      </div>
+      <div class="col-lg-4 d-flex justify-content-end">
+        <%= f.submit 'Publish', class:"btn btn-outline-primary radius_custom artdeco-button__text" %>
+      </div>
+    </div>
+  <% end %>
+</div>

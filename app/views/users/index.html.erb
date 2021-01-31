@@ -1,0 +1,32 @@
+<%= render 'shared/header' %>
+<div class="container-fluid">
+  <div class="row">
+    <%= render 'shared/left_sidebar' %>
+    <div class="col-lg-8">
+      <h2> Heading page</h2>
+      <% @users.each do |user| %>
+        <% if user.id != current_user.id && user.profile.present? %>
+          <div class="card boxes_main mb-3 p-4">
+            <div class="name_here mb-2 d-flex align-items-center">
+              <a href="" class="post_img_area_main float-left">
+                <%= image_tag user.profile.present? && user.profile.avatar.present? ? user.profile.avatar : 'profile.jpg', class: "img-fluid post_img_area" %>
+              </a>
+              <div class="float-left ml-2 mb-1 d-flex flex-column">
+                <%= link_to select_user_profile_path(user) do %>
+                  <h3 class="ml-2"><%= "#{user.profile.user_name} (#{user.profile.first_name} #{user.profile.last_name})" if user.profile.present? %></h3>
+                <% end %>
+                <p class="text-muted m-0 small_font ml-2"><%= "#{user.profile.company_bio}" if user.profile.present? %></p>
+              </div>
+              <div id="follow" class="float-right">
+                <%= render 'shared/follow_form', user: user %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+      <% if Profile.all.count < 2 %>
+        <p>There are no user to display</p>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -13,9 +13,10 @@ class User::PostsController < ApplicationController
     @post.user = current_user
     if (@post.save)
       flash[:notice] = 'post create successfully'
-      redirect_to user_posts_path
+      redirect_to root_path
     else
       flash[:alert] = @post.errors
+      redirect_to root_path
     end
   end
 

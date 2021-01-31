@@ -1,26 +1,41 @@
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<div class="main">
+  <!-- Sign up form -->
+  <section class="signup">
+    <div class="container">
+      <div class="row signup-content">
+        <div class="col-lg-6">
+          <div class="signup-form">
+            <h2 class="form-title">Login</h2>
+              <%= form_for(resource, as: resource_name, url: session_path(resource_name), class: 'register-form') do |f| %>
+              <div class="form-group">
+                <label for="email"><i class="fa fa-envelope" aria-hidden="true"></i></label>
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Your Email" %>
+              </div>
+              <div class="form-group">
+                <label for="pass"><i class="fa fa-lock" aria-hidden="true"></i></label>
+                <%= f.password_field :password, autocomplete: "current-password" %>
+              </div>
+              <% if devise_mapping.rememberable? %>
+                <div class="field">
+                  <%= f.check_box :remember_me %>
+                  <%= f.label :remember_me %>
+                </div>
+              <% end %>
+              <div class="form-group form-button">
+                <%= f.submit "Log in", class:"form-submit" %>
+              </div>
+              <%= render "users/shared/links" %>
+            <% end %>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="signup-image">
+            <figure class="m-0">
+              <%= image_tag 'signin-image.jpg' %>
+            </figure>
+          </div>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
-
-<%= render "user/shared/links" %>
+  </section>
+</div>

@@ -1,0 +1,71 @@
+<div class="container my-4">
+  <div class="card boxes_main bg_bodr p-5">
+    <h6 class="text-muted">USER INFORMATION</h6>
+    <%= form_for(@profile, url: user_profiles_path) do |f| %>
+      <div class="row">
+        <div class="col-md-6">
+          <label>First Name</label>
+          <%= f.text_field :first_name, class: 'w-100 bodr p-2',placeholder: 'first name' %>
+        </div>
+        <div class="col-md-6">
+          <label>Last Name</label>
+          <%= f.text_field :last_name, class: 'w-100 bodr p-2',placeholder: 'last name' %>
+        </div>
+      </div>
+      <div class="row my-4">
+        <div class="col-md-6">
+          <label>User Name</label>
+          <%= f.text_field :user_name, class: 'w-100 bodr p-2',placeholder: 'user_name' %>
+        </div>
+        <div class="col-md-6">
+          <label>Phone</label>
+          <%= f.text_field :phone, class: 'w-100 bodr p-2',placeholder: '030000000' %>
+        </div>
+      </div>
+      <h6 class="mt-5 text-muted">ADDRESS INFORMATION</h6>
+      <label>Address</label>
+      <%= f.text_field :address, class: 'w-100 bodr p-2',placeholder: 'street no # 2 sabzazar' %>
+      <div class="row py-4">
+        <div class="col-md-6">
+          <div class="d-flex flex-column">
+            <label>City</label>
+            <%= f.text_field :city, class: 'w-100 bodr p-2',placeholder: 'city' %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex flex-column">
+            <label>Country</label>
+            <%= f.text_field :country, class: 'w-100 bodr p-2',placeholder: 'Pakistan' %>
+          </div>
+        </div>
+      </div>
+      <h6 class="mt-5 text-muted">COMPANY INFORMATION</h6>
+      <div class="col-md-12">
+        <label>Company Name</label>
+
+        <%= f.text_field :company_name, class: 'w-100 bodr p-2',placeholder: 'Company Name' %>
+      </div>
+      <div class="row py-4">
+        <div class="col-md-12">
+          <label>Company Bio</label>
+          <%= f.text_area :company_bio, class: 'w-100 bodr my-2 p-2', rows: '4'%>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Gender</label>
+          <%= f.select(:gender, Profile.genders.keys.map {|key| [key.humanize, key]}, {}, class: 'form-control') %>
+        </div>
+        <div class="col-md-6">
+          <label>Avatar</label>
+          <%= f.file_field :avatar, class: 'w-100  p-2',placeholder: 'last name' %>
+        </div>
+      </div>
+      <div class="d-flex flex-row">
+        <div class="d-flex">
+          <button class="btn btn-primary my-2">Finish</button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
